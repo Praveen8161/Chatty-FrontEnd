@@ -22,7 +22,7 @@ const NavBar = () => {
   }
 
   return (
-    <div className="relative flex flex-row items-center justify-around px-1 py-2 shadow-xl sm:justify-between md:px-3 bg-slate-500">
+    <div className="relative flex flex-row items-center justify-around px-1 py-2 shadow-xl sm:justify-between md:px-3 bg-slate-100">
       {/* Search Side Bar Show on Click */}
       <div className="w-[30%] ">
         <p
