@@ -10,7 +10,7 @@ const ChatPage = () => {
       <NavBar />
 
       {/* Main Chat Section */}
-      <div className="flex-row flex-grow hidden h-full gap-3 px-5 mt-2 overflow-y-auto sm:flex">
+      <div className="flex-row flex-grow hidden h-full gap-3 mt-2 overflow-y-auto sm:flex">
         <section className="flex flex-col w-4/12 px-3 overflow-y-auto rounded-t-xl bg-slate-50">
           <div className="flex flex-row items-center justify-between py-2">
             <h1 className="font-semibold md:text-lg lg:text-xl ">MyChats</h1>
