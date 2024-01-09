@@ -1,8 +1,38 @@
-# React + Vite
+# Chatty - Real-Time Chat Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+This application is a dynamic platform that facilitates seamless one-on-one and group conversations. It's designed with a user-friendly interface and robust backend to ensure real-time communication.
+## Technologies Used
+- React + Vite
+- React Router DOM
+- Socket.io - Client
+- RestAPI
+- TailWindCSS
+- DaisyUI
 
-Currently, two official plugins are available:
+## Login
+UserName - rkoprvn@gmail.com
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Password - 123
+
+## Features
+
+### One-on-One Chat
+Allows users to engage in private conversations. and Users can see the Typing Status of the Opposite User
+
+### Group Chat
+Enables users to create, join, and participate in group conversations. This feature fosters community interaction and collaboration.
+The User created the Group will be a Group Admin
+
+### Admin Privileges
+Group Admins have the ability to manage group members, including adding or removing members. This ensures that the group environment remains conducive and respectful for all members.
+
+### User Autonomy
+Users have the freedom to leave groups whenever they choose, providing them with control over their participation.
+
+### Customizable Group Names
+Admins can rename the group chat names, allowing for personalization and easy identification of groups.
+
+## Run Command
+` npm run dev `
+
