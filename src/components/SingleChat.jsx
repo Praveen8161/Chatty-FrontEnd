@@ -41,6 +41,7 @@ const SingleChat = () => {
       .then((data) => {
         if (data.acknowledged) {
           setSelectedChat(data.removed);
+          alert("User Removed from group");
         }
       })
       .catch((err) => {
@@ -307,7 +308,7 @@ const SingleChat = () => {
                         onClick={handleUserUpdate}
                         className="px-2 py-1 mt-3 text-white bg-green-700"
                       >
-                        Create Chat
+                        Update User
                       </button>
                     </>
                   ) : (
