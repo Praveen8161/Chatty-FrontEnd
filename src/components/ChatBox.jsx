@@ -162,14 +162,16 @@ const ChatBox = ({ setFetchAgain, fetchAgain }) => {
                   className="flex flex-row gap-2 my-[2px] items-center  "
                 >
                   {/* Logic to see sender Profile Pic */}
-                  {isSameSender(messages, m, i, user._id)}
-                  {(isSameSender(messages, m, i, user._id) ||
-                    isLastMessage(messages, i, user._id)) && (
+
+                  {isSameSender(messages, m, i, user._id) ||
+                  isLastMessage(messages, i, user._id) ? (
                     <img
                       src={m.sender.pic}
                       alt="DP"
                       className="w-[30px] h-[30px] rounded-full bg-white"
                     />
+                  ) : (
+                    <span className="ml-7"></span>
                   )}
                   {/* Message Content */}
                   <div

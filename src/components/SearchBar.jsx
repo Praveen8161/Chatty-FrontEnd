@@ -88,7 +88,7 @@ const SearchBar = ({ searchShow, setSearchShow }) => {
 
   return (
     <div
-      className={`h-screen px-4 py-3 max-w-[350px] w-full absolute bg-gradient-to-r from-cyan-500 to-blue-500 top-0 left-0 flex flex-col justify-start items-center ${
+      className={` z-20 h-screen px-4 py-3 max-w-[350px] w-full absolute bg-gradient-to-r from-cyan-500 to-blue-500 top-0 left-0 flex flex-col justify-start items-center ${
         searchShow ? " translate-x-0 " : "translate-x-[-500px]"
       } transition-all duration-500 overflow-y-auto cus-scroll-hide overflow-x-hidden `}
     >
