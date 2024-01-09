@@ -50,7 +50,7 @@ const MyChats = () => {
   }
 
   return (
-    <div className="flex flex-col flex-grow gap-3 px-3 py-3 bg-slate-400 rounded-t-xl">
+    <div className="flex flex-col flex-grow gap-3 px-3 py-3 bg-slate-200 rounded-t-xl">
       {/* All Chats List*/}
       {chats?.map((chat) => (
         <div
