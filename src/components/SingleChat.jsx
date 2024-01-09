@@ -292,8 +292,8 @@ const SingleChat = () => {
                         {loading ? (
                           <div>Loading...</div>
                         ) : (
-                          <div className="flex flex-col items-start justify-center">
-                            {searchResult?.slice(0, 4).map((user) => (
+                          <div className="flex flex-col items-start justify-center overflow-y-auto max-h-[50vh]">
+                            {searchResult?.map((user) => (
                               <UserListItem
                                 key={user._id}
                                 user={user}
