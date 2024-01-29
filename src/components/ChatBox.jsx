@@ -11,7 +11,7 @@ const ENDPOINT = `${API}`;
 let socket, selectedChatCompare;
 
 // Chat Box -- Real Time Chat View
-const ChatBox = ({ setFetchAgain, fetchAgain }) => {
+const ChatBox = ({ setViewChatBox }) => {
   // Selected Chat Details
   const { selectedChat, user } = ChatState();
   // All the messages for the Chats
@@ -85,14 +85,13 @@ const ChatBox = ({ setFetchAgain, fetchAgain }) => {
       })
         .then((d) => d.json())
         .then((data) => {
-          console.log(data);
           if (data.acknowledged) {
             // Socket - Emitter - New Message
             socket.emit("newMessage", data.message);
             setMessages(() => [...messages, data.message]);
           }
         })
-        .catch((e) => console.log(e));
+        .catch((e) => alert(e));
     }
   }
 
@@ -114,7 +113,7 @@ const ChatBox = ({ setFetchAgain, fetchAgain }) => {
           socket.emit("joinChat", selectedChat._id);
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => alert(e));
   }
 
   // Initialize -- Fetching Messages
@@ -137,13 +136,13 @@ const ChatBox = ({ setFetchAgain, fetchAgain }) => {
 
   return (
     <div
-      className={`h-full bg-stone-50 ${
+      className={`h-[91vh] sm:h-full flex-grow bg-stone-50 flex-col px-2 ${
         selectedChat ? "flex" : "hidden"
-      } flex-col px-2`}
+      }`}
     >
       {/* Name of the selected chat top of the Chat Box */}
       <section>
-        <SingleChat setFetchAgain={setFetchAgain} fetchAgain={fetchAgain} />
+        <SingleChat setViewChatBox={setViewChatBox} />
       </section>
 
       {/* Selected chats Messages */}

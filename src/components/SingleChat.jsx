@@ -2,6 +2,7 @@ import { getSender, getSenderFUll } from "../config/ChatLogic.js";
 import { ChatState } from "../context/ChatProvider";
 import { AiOutlineEye } from "react-icons/ai";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { IoIosArrowDropleft } from "react-icons/io";
 import { FaRegEdit } from "react-icons/fa";
 import { API } from "../helpers/API.js";
 import { useEffect, useState } from "react";
@@ -10,7 +11,7 @@ import UserListItem from "./UserListItem.jsx";
 
 /* eslint-disable react/prop-types */
 // Selected Chat Details , view and update group chat profile
-const SingleChat = () => {
+const SingleChat = ({ setViewChatBox }) => {
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
 
   // Selected User
@@ -164,7 +165,13 @@ const SingleChat = () => {
         <>
           <div className="flex flex-row items-center justify-between px-2">
             {/* Chat Name */}
-            <p className="text-xl font-semibold ">
+            <p className="flex flex-row items-center gap-2 text-xl font-semibold">
+              <span
+                onClick={() => setViewChatBox(() => false)}
+                className="flex self-end cursor-pointer sm:hidden"
+              >
+                <IoIosArrowDropleft size={21} />
+              </span>
               {selectedChat.isGroupChat
                 ? selectedChat.chatName
                 : getSender(user, selectedChat.users)}
@@ -178,8 +185,9 @@ const SingleChat = () => {
             </label>
 
             {/* Chat Profile Model */}
-            <input type="checkbox" id="my_modal_7" className="modal-toggle" />
-            <div className="modal" role="dialog">
+            <input type="checkbox" id="my_modal_7" className=" modal-toggle" />
+
+            <div className=" modal" role="dialog">
               {/* For Group Chat */}
               {selectedChat.isGroupChat ? (
                 <div className="flex flex-col items-center modal-box">
@@ -264,7 +272,7 @@ const SingleChat = () => {
                     ))}
                   </div>
 
-                  {/* Serach for User to be Added to the group */}
+                  {/* Search for User to be Added to the group */}
                   {user._id === selectedChat.groupAdmin._id ? (
                     <>
                       <input
