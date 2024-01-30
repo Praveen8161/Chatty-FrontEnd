@@ -13,6 +13,7 @@ import UserListItem from "./UserListItem.jsx";
 // Selected Chat Details , view and update group chat profile
 const SingleChat = ({ setViewChatBox }) => {
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
+  const [modelShow, setModelShow] = useState(false);
 
   // Selected User
   const [selectedUsers, setSelectedUsers] = useState("");
@@ -177,172 +178,184 @@ const SingleChat = ({ setViewChatBox }) => {
                 : getSender(user, selectedChat.users)}
             </p>
             {/* To view Chat profile */}
-            <label
-              htmlFor="my_modal_7"
+            <span
+              onClick={() => setModelShow(true)}
               className="p-0 px-3 m-0 bg-transparent border-none shadow-none btn"
             >
               <AiOutlineEye size={20} />
-            </label>
+            </span>
 
             {/* Chat Profile Model */}
-            <input type="checkbox" id="my_modal_7" className=" modal-toggle" />
+            {/* <input type="checkbox" id="my_modal_7" className=" modal-toggle" /> */}
 
-            <div className=" modal" role="dialog">
-              {/* For Group Chat */}
-              {selectedChat.isGroupChat ? (
-                <div className="flex flex-col items-center modal-box">
-                  {/* Update Chat Name */}
-                  {updateName ? (
-                    <div className="flex flex-row gap-2 mb-3">
-                      <input
-                        type="text"
-                        placeholder="Enter Chat Name"
-                        value={chatName}
-                        onChange={(e) => setChatName(e.target.value)}
-                        className="w-full max-w-xs input input-bordered input-md rounded-2xl"
-                      />
-                      <button
-                        onClick={() => handleChatNameUpdate(selectedChat._id)}
-                        className="px-2 bg-blue-500 rounded-lg hover:bg-blue-800 hover:text-white"
-                      >
-                        Update
-                      </button>
-                    </div>
-                  ) : (
-                    <h3 className="flex flex-row items-center gap-2 mb-3 text-lg font-bold">
-                      <span>{selectedChat.chatName}</span>
-
-                      {/* Allow Admin to change the Group Name -- Icon */}
-                      {selectedChat.groupAdmin._id === user._id ? (
-                        <span
-                          onClick={() => setUpdateName(true)}
-                          className="relative top-[2px] cursor-pointer"
+            {modelShow && (
+              <div className=" fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50 min-w-[90vw] sm:min-w-[400px]">
+                {/* For Group Chat */}
+                {selectedChat.isGroupChat ? (
+                  <div className="flex flex-col items-center modal-box">
+                    {/* Update Chat Name */}
+                    {updateName ? (
+                      <div className="relative flex flex-row gap-2 mb-3">
+                        <input
+                          type="text"
+                          placeholder="Enter Chat Name"
+                          value={chatName}
+                          onChange={(e) => setChatName(e.target.value)}
+                          className="w-full max-w-xs input input-bordered input-md rounded-2xl"
+                        />
+                        <button
+                          onClick={() => handleChatNameUpdate(selectedChat._id)}
+                          className="px-2 bg-blue-500 rounded-lg hover:bg-blue-800 hover:text-white"
                         >
-                          <FaRegEdit />
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </h3>
-                  )}
+                          Update
+                        </button>
+                      </div>
+                    ) : (
+                      <h3 className="flex flex-row items-center gap-2 mb-3 text-lg font-bold">
+                        <span>{selectedChat.chatName}</span>
 
-                  {/* All the Users in the Group */}
-                  <div className="flex flex-row flex-wrap items-center justify-center gap-3 mb-3">
-                    {/* All the users in the group */}
-                    {selectedChat.users.map((u) => (
-                      <div
-                        key={u._id}
-                        className="flex flex-row items-center justify-center h-full overflow-hidden border-2 border-black rounded-xl"
-                      >
-                        {/* user name */}
-                        <span className="self-center px-2 py-1 bg-blue-500">
-                          {u.name}
-                        </span>
-
-                        {/* Remove user from group -- Groups Admin*/}
-                        {user._id === selectedChat.groupAdmin._id ? (
+                        {/* Allow Admin to change the Group Name -- Icon */}
+                        {selectedChat.groupAdmin._id === user._id ? (
                           <span
-                            onClick={() =>
-                              handleUserRemove(selectedChat._id, u._id)
-                            }
-                            className="h-full cursor-pointer"
+                            onClick={() => setUpdateName(true)}
+                            className="relative top-[2px] cursor-pointer"
                           >
-                            <IoIosCloseCircleOutline
-                              size={21}
-                              className="border-black"
-                            />
-                          </span>
-                        ) : u._id === user._id ? (
-                          // Or if curr user is in the group allow them to leave the group
-                          <span
-                            onClick={() =>
-                              handleUserRemove(selectedChat._id, u._id)
-                            }
-                            className="h-full cursor-pointer"
-                          >
-                            <IoIosCloseCircleOutline
-                              size={21}
-                              className="border-black"
-                            />
+                            <FaRegEdit />
                           </span>
                         ) : (
                           ""
                         )}
-                      </div>
-                    ))}
-                  </div>
+                      </h3>
+                    )}
 
-                  {/* Search for User to be Added to the group */}
-                  {user._id === selectedChat.groupAdmin._id ? (
-                    <>
-                      <input
-                        type="text"
-                        placeholder="Users name"
-                        onChange={(e) => handleUserSearch(e.target.value)}
-                        className="w-full max-w-xs input input-bordered input-md rounded-2xl"
-                      />
+                    {/* All the Users in the Group */}
+                    <div className="flex flex-row flex-wrap items-center justify-center gap-3 mb-3">
+                      {/* All the users in the group */}
+                      {selectedChat.users.map((u) => (
+                        <div
+                          key={u._id}
+                          className="flex flex-row items-center justify-center h-full overflow-hidden border-2 border-black rounded-xl"
+                        >
+                          {/* user name */}
+                          <span className="self-center px-2 py-1 bg-blue-500">
+                            {u.name}
+                          </span>
 
-                      {/* Selected Users */}
-                      <div className="flex flex-row flex-wrap gap-1 mt-2">
-                        {selectedUsers ? (
-                          <UserBadge
-                            key={selectedUsers._id}
-                            u={selectedUsers}
-                            handleDelete={handleDelete}
-                          />
-                        ) : (
-                          ""
-                        )}
-                      </div>
-
-                      {/* Search Results */}
-                      <div className="flex flex-col items-center justify-center">
-                        {loading ? (
-                          <div>Loading...</div>
-                        ) : (
-                          <div className="flex flex-col items-start justify-center overflow-y-auto max-h-[50vh]">
-                            {searchResult?.map((user) => (
-                              <UserListItem
-                                key={user._id}
-                                user={user}
-                                handleGroup={handleGroup}
+                          {/* Remove user from group -- Groups Admin*/}
+                          {user._id === selectedChat.groupAdmin._id ? (
+                            <span
+                              onClick={() =>
+                                handleUserRemove(selectedChat._id, u._id)
+                              }
+                              className="h-full cursor-pointer"
+                            >
+                              <IoIosCloseCircleOutline
+                                size={21}
+                                className="border-black"
                               />
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                      {/* Button to Add new user to group Chat */}
-                      <button
-                        onClick={handleUserUpdate}
-                        className="px-2 py-1 mt-3 text-white bg-green-700"
-                      >
-                        Update User
-                      </button>
-                    </>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              ) : (
-                // For One on One chat
-                <div className="flex flex-col items-center modal-box">
-                  <img
-                    src={getSenderFUll(user, selectedChat.users).pic}
-                    alt="DP"
-                    className="w-[100px] h-[100px] rounded-[50%]"
-                  />
-                  <h3 className="text-lg font-bold">
-                    {getSenderFUll(user, selectedChat.users).name}
-                  </h3>
-                  <p className="">
-                    {getSenderFUll(user, selectedChat.users).email}
-                  </p>
-                </div>
-              )}
-              <label className="modal-backdrop" htmlFor="my_modal_7">
-                Close
-              </label>
-            </div>
+                            </span>
+                          ) : u._id === user._id ? (
+                            // Or if curr user is in the group allow them to leave the group
+                            <span
+                              onClick={() =>
+                                handleUserRemove(selectedChat._id, u._id)
+                              }
+                              className="h-full cursor-pointer"
+                            >
+                              <IoIosCloseCircleOutline
+                                size={21}
+                                className="border-black"
+                              />
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Search for User to be Added to the group */}
+                    {user._id === selectedChat.groupAdmin._id ? (
+                      <>
+                        <input
+                          type="text"
+                          placeholder="Users name"
+                          onChange={(e) => handleUserSearch(e.target.value)}
+                          className="w-full max-w-xs input input-bordered input-md rounded-2xl"
+                        />
+
+                        {/* Selected Users */}
+                        <div className="flex flex-row flex-wrap gap-1 mt-2">
+                          {selectedUsers ? (
+                            <UserBadge
+                              key={selectedUsers._id}
+                              u={selectedUsers}
+                              handleDelete={handleDelete}
+                            />
+                          ) : (
+                            ""
+                          )}
+                        </div>
+
+                        {/* Search Results */}
+                        <div className="flex flex-col items-center justify-center">
+                          {loading ? (
+                            <div>Loading...</div>
+                          ) : (
+                            <div className="flex flex-col items-start justify-center overflow-y-auto max-h-[50vh]">
+                              {searchResult?.map((user) => (
+                                <UserListItem
+                                  key={user._id}
+                                  user={user}
+                                  handleGroup={handleGroup}
+                                />
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        {/* Button to Add new user to group Chat */}
+                        <button
+                          onClick={handleUserUpdate}
+                          className="px-2 py-1 mt-3 text-white bg-green-700"
+                        >
+                          Update User
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    <div
+                      onClick={() => setModelShow(false)}
+                      className="absolute top-0 p-1 font-bold cursor-pointer right-1"
+                    >
+                      X
+                    </div>
+                  </div>
+                ) : (
+                  // For One on One chat
+                  <div className="relative flex flex-col items-center modal-box">
+                    <img
+                      src={getSenderFUll(user, selectedChat.users).pic}
+                      alt="DP"
+                      className="w-[100px] h-[100px] rounded-[50%]"
+                    />
+                    <h3 className="text-lg font-bold">
+                      {getSenderFUll(user, selectedChat.users).name}
+                    </h3>
+                    <p className="">
+                      {getSenderFUll(user, selectedChat.users).email}
+                    </p>
+
+                    <div
+                      onClick={() => setModelShow(false)}
+                      className="absolute top-0 p-1 font-bold cursor-pointer right-1"
+                    >
+                      X
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </>
       ) : (
